@@ -1,4 +1,4 @@
-# weChatRobot
+# wechat-ai-robot
 
 一个基于微信公众号的智能聊天机器人项目，支持ChatGPT对话模式回复内容.
 
