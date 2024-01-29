@@ -1,4 +1,4 @@
-package com.eshare.wechatairobot.domain;
+package com.eshare.wechatairobot.client.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -11,7 +11,7 @@ import lombok.Setter;
  */
 @JsonRootName("xml")
 @Data
-public class WeChatMessage {
+public class WeChatMessageDTO {
 
     @JsonProperty("ToUserName")
     private String toUserName;

@@ -2,7 +2,7 @@ package com.eshare.wechatairobot.application.processor;
 
 
 import com.eshare.wechatairobot.application.service.KeywordService;
-import com.eshare.wechatairobot.domain.WeChatMessage;
+import com.eshare.wechatairobot.client.dto.WeChatMessageDTO;
 import com.eshare.wechatairobot.infrastructure.common.enums.WeChatMsgType;
 import com.eshare.wechatairobot.infrastructure.config.OpenAIKeyPool;
 import com.eshare.wechatairobot.infrastructure.tunnel.rest.OpenAiTunnel;
@@ -33,13 +33,13 @@ public class TextMessageProcessor implements WeChatMessageProcessor {
     }
 
     @Override
-    public BaseMessage processMessage(WeChatMessage weChatMessage) {
+    public BaseMessage processMessage(WeChatMessageDTO weChatMessageDTO) {
 
-        log.info("收到用户文本信息{}", weChatMessage);
+        log.info("收到用户文本信息{}", weChatMessageDTO);
 
-        String fromUserName = weChatMessage.getFromUserName();
-        String toUserName = weChatMessage.getToUserName();
-        String content = weChatMessage.getContent();
+        String fromUserName = weChatMessageDTO.getFromUserName();
+        String toUserName = weChatMessageDTO.getToUserName();
+        String content = weChatMessageDTO.getContent();
 
         //优先查找关键字配置
         BaseMessage message = keywordService.getMessageByKeyword(content);

@@ -3,9 +3,8 @@ package com.eshare.wechatairobot.application.service;
 import com.eshare.wechatairobot.application.processor.EventMessageProcessor;
 import com.eshare.wechatairobot.application.processor.TextMessageProcessor;
 import com.eshare.wechatairobot.application.processor.WeChatMessageProcessor;
-import com.eshare.wechatairobot.domain.WeChatMessage;
+import com.eshare.wechatairobot.client.dto.WeChatMessageDTO;
 import com.eshare.wechatairobot.infrastructure.common.enums.WeChatMsgType;
-import com.eshare.wechatairobot.infrastructure.config.KeywordConfig;
 import com.eshare.wechatairobot.infrastructure.config.WechatConfig;
 import com.eshare.wechatairobot.infrastructure.tunnel.rest.dataobject.BaseMessage;
 import com.eshare.wechatairobot.infrastructure.tunnel.rest.dataobject.TextMessage;
@@ -81,12 +80,12 @@ public class WeChatService {
      */
     public BaseMessage processReceived(String message) {
         BaseMessage resultMessage;
-        WeChatMessage weChatMessage = XmlUtil.xmlToObj(message, WeChatMessage.class);
-        String fromUserName = weChatMessage.getFromUserName();
-        String toUserName = weChatMessage.getToUserName();
+        WeChatMessageDTO weChatMessageDTO = XmlUtil.xmlToObj(message, WeChatMessageDTO.class);
+        String fromUserName = weChatMessageDTO.getFromUserName();
+        String toUserName = weChatMessageDTO.getToUserName();
         try {
-            WeChatMsgType msgType = WeChatMsgType.findByValue(weChatMessage.getMsgType());
-            resultMessage = distributeEvent(weChatMessage, fromUserName, toUserName, msgType);
+            WeChatMsgType msgType = WeChatMsgType.findByValue(weChatMessageDTO.getMsgType());
+            resultMessage = distributeEvent(weChatMessageDTO, fromUserName, toUserName, msgType);
         } catch (Exception e) {
             log.error("处理来至微信服务器的消息出现错误", e);
             resultMessage = new TextMessage(toUserName, fromUserName, "我竟无言以对！");
@@ -95,13 +94,13 @@ public class WeChatService {
         return resultMessage;
     }
 
-    private BaseMessage distributeEvent(WeChatMessage weChatMessage, String fromUserName, String toUserName, WeChatMsgType msgType) {
+    private BaseMessage distributeEvent(WeChatMessageDTO weChatMessageDTO, String fromUserName, String toUserName, WeChatMsgType msgType) {
         BaseMessage resultMessage;
         WeChatMessageProcessor weChatMessageHandle = messageHandleMap.get(msgType);
         if (weChatMessageHandle == null) {
             resultMessage = new TextMessage(toUserName, fromUserName, "你说啥我咋没懂呢[疑问]");
         } else {
-            resultMessage = weChatMessageHandle.processMessage(weChatMessage);
+            resultMessage = weChatMessageHandle.processMessage(weChatMessageDTO);
         }
         return resultMessage;
     }

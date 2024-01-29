@@ -1,7 +1,7 @@
 package com.eshare.wechatairobot.application.processor;
 
 
-import com.eshare.wechatairobot.domain.WeChatMessage;
+import com.eshare.wechatairobot.client.dto.WeChatMessageDTO;
 import com.eshare.wechatairobot.infrastructure.common.enums.WeChatMsgType;
 import com.eshare.wechatairobot.infrastructure.tunnel.rest.dataobject.BaseMessage;
 
@@ -12,5 +12,5 @@ public interface WeChatMessageProcessor {
 
     WeChatMsgType getMsgType();
 
-    BaseMessage processMessage(WeChatMessage weChatMessage);
+    BaseMessage processMessage(WeChatMessageDTO weChatMessageDTO);
 }
