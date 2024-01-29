@@ -8,8 +8,10 @@ wechat:
   token: atming_
 
 keyword:
-  versionLocation: data/keyword_version.txt
-  messageLocation: data/keyword.json
+  #versionLocation: data/keyword_version.txt
+  #messageLocation: data/keyword.json
+  versionLocation: https://gitee.com/10856214/wechat-config/raw/master/keyword.json
+  messageLocation: https://gitee.com/10856214/wechat-config/raw/master/keyword.json
 
 openai:
   keyList:
