@@ -9,8 +9,6 @@ import lombok.Setter;
 /**
  * 微信消息结构类
  */
-@Getter
-@Setter
 @JsonRootName("xml")
 @Data
 public class WeChatMessage {
