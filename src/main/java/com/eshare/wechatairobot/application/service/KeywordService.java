@@ -52,6 +52,10 @@ public class KeywordService {
     public KeywordService(KeywordConfig keywordConfig) {
         this.versionLocation = keywordConfig.getVersionLocation();
         this.messageLocation = keywordConfig.getMessageLocation();
+        refreshKeyword();
+    }
+
+    public void refreshKeyword() {
         //根据配置从远程加载或者从本地加载关键字库
         if (StringUtils.isNotBlank(this.versionLocation)) {
             if (versionLocation.startsWith("http")) {
