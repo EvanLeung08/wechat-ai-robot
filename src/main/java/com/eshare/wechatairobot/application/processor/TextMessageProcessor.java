@@ -7,6 +7,7 @@ import com.eshare.wechatairobot.infrastructure.common.constant.OpenAIConstant;
 import com.eshare.wechatairobot.infrastructure.common.enums.WeChatMsgType;
 import com.eshare.wechatairobot.infrastructure.config.OpenAIKeyPool;
 import com.eshare.wechatairobot.infrastructure.tunnel.rest.OpenAiTunnel;
+import com.eshare.wechatairobot.infrastructure.tunnel.rest.XunFeiSparkTunnel;
 import com.eshare.wechatairobot.infrastructure.tunnel.rest.dataobject.BaseMessage;
 import com.eshare.wechatairobot.infrastructure.tunnel.rest.dataobject.TextMessage;
 import lombok.extern.slf4j.Slf4j;
@@ -47,21 +48,21 @@ public class TextMessageProcessor implements WeChatMessageProcessor {
 
         //再尝试从GPT获取响应
         if (message == null) {
-           String requestContent = content + "? 请回复内容不要超过200字符，不要换行，选出唯一一个最优最短答案即可。";
+            String requestContent = content + "? 请回复内容不要超过300字符，不要换行，选出唯一一个最优最短答案即可。";
             log.info("请求文本信息：{}", requestContent);
             boolean retry = false;
-            //优先使用GPT$
+            //优先使用星火LITE模型
             try {
-                OpenAiTunnel openAITunnel = new OpenAiTunnel(this.openAIKeyPool, OpenAIConstant.MODEL_GPT4);
-                message = openAITunnel.getResponse(requestContent, OpenAIConstant.MODEL_GPT4);
+                XunFeiSparkTunnel openAITunnel = new XunFeiSparkTunnel();
+                message = openAITunnel.getResponse(weChatMessageDTO.getFromUserName(), requestContent, OpenAIConstant.MODEL_DEEPSEAK);
             } catch (Exception ex) {
-                log.warn("调用openai GPT4接口异常，准备重试", ex);
+                log.warn("调用星火LITE接口异常，准备重试", ex);
                 retry = true;
             }
             if (retry) {
                 try {
-                    OpenAiTunnel openAITunnel = new OpenAiTunnel(this.openAIKeyPool, OpenAIConstant.MODEL_GPT3);
-                    message = openAITunnel.getResponse(requestContent, OpenAIConstant.MODEL_GPT3);
+                    XunFeiSparkTunnel openAITunnel = new XunFeiSparkTunnel();
+                    message = openAITunnel.getResponse(weChatMessageDTO.getFromUserName(), requestContent, OpenAIConstant.MODEL_XUNFEI_LITE);
                 } catch (Exception ex) {
                     log.error("调用openai接口异常", ex);
                     message = null;

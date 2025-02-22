@@ -29,7 +29,7 @@ public class EventMessageProcessor implements WeChatMessageProcessor {
         String toUserName = weChatMessageDTO.getToUserName();
         WeChatEventType eventType = WeChatEventType.findByValue(event);
         if (eventType == WeChatEventType.SUBSCRIBE) {
-            return new TextMessage(toUserName, fromUserName, "谢谢关注！可以开始跟我聊天啦😁我是Evan的沙雕AI助手，哈哈！如果想获取英语教程，请输入 \"神救救我吧\"，问问题请输入其他信息，问题次数有限制噢！");
+            return new TextMessage(toUserName, fromUserName, "谢谢关注！可以开始跟我聊天啦😁我是外企牛马的性感AI助手，哈哈！如果想获取英语教程，请输入 \"神救救我吧\"， 由于最近缺钱，AI功能已关闭，有问题不用问我！");
         } else if (eventType == WeChatEventType.UNSUBSCRIBE) {
             log.info("用户[" + weChatMessageDTO.getFromUserName() + "]取消了订阅");
         }
