@@ -54,7 +54,7 @@ public class TextMessageProcessor implements WeChatMessageProcessor {
             //优先使用星火LITE模型
             try {
                 XunFeiSparkTunnel openAITunnel = new XunFeiSparkTunnel();
-                message = openAITunnel.getResponse(weChatMessageDTO.getFromUserName(), requestContent, OpenAIConstant.MODEL_DEEPSEAK);
+                message = openAITunnel.getResponse(weChatMessageDTO.getFromUserName(), requestContent, OpenAIConstant.MODEL_DEEPSEEK);
             } catch (Exception ex) {
                 log.warn("调用星火LITE接口异常，准备重试", ex);
                 retry = true;
